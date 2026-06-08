@@ -8,7 +8,27 @@ public class Player extends Character {
     }
 //core mechanic of the game, before any roll there has to be a bet placed.
     public int chooseBet() {
-        System.out.println("You(mentally): Alright, lets see what the best bet in this situation should be...");
+        int ran = (int) (Math.random() * 5) + 1;
+        if(ran == 1) {
+            System.out.println("You(mentally): Alright, lets see what the best bet in this situation should be...");
+            System.out.println("Balance: " + getBalance());
+        }
+        else if(ran == 2) {
+            System.out.println("You(mentally): I wonder what I should bet..");
+            System.out.println("Balance: " + getBalance());
+        }
+        else if (ran == 3) {
+            System.out.println("You(mentally): my bet should be...");
+            System.out.println("Balance: " + getBalance());
+        }
+        else if(ran == 4){
+            System.out.println("You(mentally): Gotta play this smart... I think my bet will be...");
+            System.out.println("Balance: " + getBalance());
+        }
+        else if (ran == 5) {
+            System.out.println("You(mentally): Lets go with...");
+            System.out.println("Balance: " + getBalance());
+        }
         while (true) {
             if(scnr.hasNextInt()){
                 int bet = scnr.nextInt();
