@@ -24,12 +24,12 @@ public class Character {
     }
 
     //add aura
-    public void addAura(float amount){
+    public void addAura(double amount){
         aura += amount;
     }
 
     //remove aura
-    public void loseAura(float amount){
+    public void loseAura(double amount){
         aura -= amount;
     }
 
