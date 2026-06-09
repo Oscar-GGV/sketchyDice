@@ -2,6 +2,12 @@ public class Match {
     private Player player;
     private Opponent opponent;
     private boolean playerStarts;
+    private int roundWinner;
+    private int matchWinner;
+
+    public static final int playerWin = 1;
+    public static final int opponentWin = 2;
+    public static final int tie = 3;
 
     public Match(Player player, Opponent opponent){
         this.player = player;
@@ -9,9 +15,17 @@ public class Match {
     }
     //once either player or opponent gets to 0 balance or below, the game is over
     public void play() {
+        //game continues as long as neither balance is less than 0
         while (player.getBalance() > 0 && opponent.getBalance() > 0){
             playRound();
             playerStarts = !playerStarts;
+        }
+        //checks and sets who the match winner is
+        if(player.getBalance() <= 0){
+            matchWinner = opponentWin;
+        }
+        else {
+            matchWinner = playerWin;
         }
     }
 
@@ -50,6 +64,7 @@ public class Match {
             System.out.println("System: " + totalBet + " goes to " + player.getName());
             player.addAura(2.0);
             System.out.println("----------------------------");
+            roundWinner = playerWin;
         }
         else if (playroll < opproll) {
             System.out.println("La Sombra Oscura: " + opponent.getName() + " wins");
@@ -57,12 +72,17 @@ public class Match {
             System.out.println("System: " + totalBet + " goes to "  + opponent.getName());
             opponent.addAura(2.0);
             System.out.println("----------------------------");
+            roundWinner = opponentWin;
         }
         else {
             System.out.println("La Sombra Oscura: Nobody wins I take half");
             player.addMoney(playerBet/2);
             opponent.addMoney(oppBet/2);
             System.out.println("----------------------------");
+            roundWinner = tie;
         }
+    }
+    public int getWinner(){
+        return matchWinner;
     }
 }
