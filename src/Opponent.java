@@ -1,16 +1,16 @@
 public class Opponent extends Character {
 
-    public Opponent(String name, int balance) {
-        super(name, balance);
+    public Opponent(String name, int balance, double aura) {
+        super(name, balance, aura);
     }
 
     //used in the situation where the player bets first
     public int counterBet(Player player, int playerBet) {
       int oppBet = 0;
        //gets the aura of the player
-        float playerAura = player.getAura();
+        double playerAura = player.getAura();
         //gets the aura of the NPC
-        float opponentAura = getAura();
+        double opponentAura = getAura();
 
         if (playerAura < opponentAura && getBalance() < player.getBalance()){
             System.out.println(getName() + ": You think I'm scared of you?");
@@ -65,7 +65,7 @@ public class Opponent extends Character {
             oppBet = getBalance()/2;
         }
         else if (choice == 3 || choice == 9 || choice == 6) {
-            System.out.print(getName() + ": okay...");
+            System.out.println(getName() + ": okay...");
             oppBet = getBalance()/3;
         }
         else {

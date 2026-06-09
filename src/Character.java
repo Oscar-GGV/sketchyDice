@@ -1,12 +1,12 @@
 public class Character {
     private String name;
-    private float aura;
+    private double aura;
     private int balance;
 
-    public Character(String name, int balance){
+    public Character(String name, int balance, double aura){
         this.name = name;
         this.balance = balance;
-        this.aura = 0;
+        this.aura = aura;
     }
     //returns STRING name
     public String getName(){
@@ -14,7 +14,7 @@ public class Character {
     }
 
     //returns FLOAT aura
-    public float getAura(){
+    public double getAura(){
         return aura;
     }
 

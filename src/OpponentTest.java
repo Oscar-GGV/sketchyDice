@@ -1,7 +1,7 @@
 public class OpponentTest {
     public static void main(String[] args){
-        Opponent opp = new Opponent("Jeffery", 300);
-        Player play = new Player("Bruh", 500);
+        Opponent opp = new Opponent("Jeffery", 300, 4.0);
+        Player play = new Player("Bruh", 500, 1.0);
       //same aura no aura added
       //for more aura comment out .play.addAura
         opp.addAura(20);

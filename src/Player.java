@@ -3,8 +3,8 @@ import java.util.Scanner;
 public class Player extends Character {
     private Scanner scnr = new Scanner(System.in);
 
-    public Player(String name, int balance) {
-        super(name, balance);
+    public Player(String name, int balance, double aura) {
+        super(name, balance, aura);
     }
 //core mechanic of the game, before any roll there has to be a bet placed.
     public int chooseBet() {
