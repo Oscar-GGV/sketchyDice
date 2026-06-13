@@ -50,7 +50,7 @@ public class Match {
             playerBet = player.chooseBet();
             player.loseMoney(playerBet);
         }
-        int totalBet = (oppBet + playerBet) * 2;
+        int totalBet = (oppBet + playerBet)/10 + (oppBet + playerBet);
         System.out.println("La Sombra Oscura: First we will start with the rolls for " + player.getName());
         DiceRoll diceroll = new DiceRoll();
         int playroll = diceroll.roll();

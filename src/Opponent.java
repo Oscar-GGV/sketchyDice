@@ -11,26 +11,43 @@ public class Opponent extends Character {
         double playerAura = player.getAura();
         //gets the aura of the NPC
         double opponentAura = getAura();
-
-        if (playerAura < opponentAura && getBalance() < player.getBalance()){
-            System.out.println(getName() + ": You think I'm scared of you?");
-            System.out.println(getName() + ": ... I'm putting my all into this one, winner takes all");
+//player pretty much wins if the player aura is 3 times the aura of the opponent aura -> gives a good reason to play risky
+        if (playerAura > (opponentAura * 3) && getBalance() < player.getBalance()){
+            TextUtils.medium(getName() + ": You think I'm scared of you?");
+            TextUtils.fastln(getName() + ": ... I'm putting my all into this one, winner takes all");
             oppBet = getBalance();
         }
+        // makes it easier to win, opponent plays riskier -> matches end faster if player has 2 times more aura than opponent
+        else if (playerAura > (opponentAura * 2) && getBalance() < player.getBalance()) {
+            counterDial();
+            oppBet = getBalance()/2;
+        }
         else if (playerAura > opponentAura) {
-            System.out.println(getName() + ": ... lets make this game fun");
+            counterDial();
             if (getBalance() < playerBet) {
-                oppBet = playerBet/2;
+                oppBet = getBalance()/3;
             }
             else {
-                oppBet = playerBet;
+                oppBet = getBalance()/4;
             }
         }
-        else if (playerAura == opponentAura) {
+        else if ((playerAura * 3) < opponentAura) {
+            counterDial();
+            int ran = (int) (Math.random() * 2) + 1;
+
+            if (ran == 1) {
+                oppBet = playerBet/3;
+            }
+            else if (ran == 2) {
+                oppBet = playerBet/2;
+            }
+        }
+        //fix this else if statement
+        else if (playerAura <= opponentAura) {
             int choice = (int)(Math.random() * 2) + 1;
             if (choice == 1 && getBalance() > playerBet) {
                 System.out.println(getName() + ": I'll play it smart...");
-                oppBet = playerBet/3;
+                oppBet = playerBet/2;
                 }
             else if (choice == 1 && getBalance() <= playerBet) {
                 int random = (int) (Math.random() * 5) + 1;
@@ -54,24 +71,111 @@ public class Opponent extends Character {
     //used in the situation where the opponent bets first
     public int placeBet(){
         int oppBet = 0;
-        System.out.println(getName() + ": ... I wonder what I'll bet against you...");
-        int choice = (int) (Math.random() * 10) + 1;
+        int choice = (int) (Math.random() * 100) + 1;
+        //if you're lucky the opponent will bet it all on a whim 1% chance
         if (choice == 1){
-            System.out.println(getName() + ": Lets see if fortune favors the bold...");
+            thinkDialogue();
             oppBet = getBalance();
         }
-        else if (choice == 2 || choice == 10) {
-            System.out.println(getName() + ": Lets play it fun");
+        //bet is 50% of Balance... 9% chance
+        else if (choice > 1 && choice < 10) {
+            thinkDialogue();
             oppBet = getBalance()/2;
         }
-        else if (choice == 3 || choice == 9 || choice == 6) {
-            System.out.println(getName() + ": okay...");
+        //bet is 33.33 percent of balance... 20% chance
+        else if (choice >= 10 && choice <= 30) {
+           thinkDialogue();
             oppBet = getBalance()/3;
         }
-        else {
-            System.out.println(getName() + ": ......");
+        //bet is 25% of Balance... 30% chance
+        else if (choice > 30 && choice <= 60){
+           thinkDialogue();
             oppBet = getBalance()/4;
+        }
+        //bet is 20% of Balance.... 30% chance
+        else if (choice > 60 && choice <= 90){
+            thinkDialogue();
+            oppBet = getBalance()/5;
+        }
+        //bet is 16% of balance... 10% chance
+        else if (choice > 90 && choice <= 100) {
+            oppBet = getBalance()/6;
         }
         return oppBet;
     }
+
+    //opponent dialogue used when making bets
+    public void thinkDialogue(){
+       int choice = (int) (Math.random() * 10) + 1;
+       if (choice == 1) {
+           TextUtils.mediumln(getName() + ": I wonder what you'll bet against me...");
+       }
+       else if (choice == 2) {
+           TextUtils.mediumln(getName() + ": I wonder if I should play it smart....");
+       }
+       else if (choice == 3) {
+           TextUtils.mediumln(getName() + ": Perhaps I should play it risky....");
+       }
+       else if (choice == 4) {
+           TextUtils.mediumln(getName() + ": If you're not a chicken maybe we should put it all on the line?");
+       }
+       else if (choice == 5) {
+           TextUtils.mediumln(getName() + ": I bet you don't even have half the money I have");
+       }
+       else if (choice == 6){
+           TextUtils.mediumln(getName() + ": I wonder how many rounds you can last till you gp broke");
+       }
+       else if (choice == 7) {
+           TextUtils.mediumln(getName() + ": doesn't it make you nervous? if you hit 0 you DIE");
+       }
+       else if(choice == 8){
+           TextUtils.mediumln(getName() + ": Just give up and go home");
+       }
+       else if(choice == 9) {
+           TextUtils.mediumln(getName() + ": forget about any promises you made and walk away with your life.....");
+       }
+       else if(choice == 10) {
+           TextUtils.mediumln(getName() + ": I truly hope for the planet's sake you don't reach him....");
+       }
+    }
+
+    //opponent dialogue for counterBet
+    public void counterDial() {
+        int ran = (int) (Math.random() * 10) + 1;
+        if (ran == 1){
+            TextUtils.fastln(getName() + ": You got me......  sike!");
+        }
+        else if (ran == 2) {
+            TextUtils.fastln(getName() + ": I wonder what plan you have to beat me...");
+        }
+        else if (ran == 3) {
+            TextUtils.fastln(getName() + ": Do you really think you can get to him?");
+        }
+        else if (ran==4) {
+            TextUtils.fastln(getName() + ": I wonder who you'll stop at.....");
+        }
+        else if (ran ==5) {
+            TextUtils.fastln(getName() + ": its no use... I already won.....");
+        }
+        else if (ran == 6){
+            TextUtils.fastln(getName() + ": I wonder how much longer you can keep this up....");
+        }
+        else if(ran == 7) {
+            TextUtils.fastln(getName() + ": I'm always three steps ahead of you....");
+        }
+        else if(ran == 8) {
+            TextUtils.fastln(getName() + ": who will bet higher this round....");
+        }
+        else if (ran == 9) {
+            TextUtils.fastln(getName() + ": why don't we take it up a notch....");
+        }
+        else if (ran == 10){
+            TextUtils.fastln(getName() + ": can you handle the pressure?");
+        }
+    }
+
+
+
 }
+
+

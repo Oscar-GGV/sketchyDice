@@ -12,6 +12,5 @@ public class MatchTest {
         else {
             System.out.println("The winner is the opponent");
         }
-
     }
 }
