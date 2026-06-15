@@ -65,6 +65,8 @@ public class Match {
             player.addAura(2.0);
             System.out.println("----------------------------");
             roundWinner = playerWin;
+            System.out.println("Player Aura " + player.getAura());
+            System.out.println("Opponent Aura " + opponent.getAura());
         }
         else if (playroll < opproll) {
             System.out.println("La Sombra Oscura: " + opponent.getName() + " wins");
@@ -73,6 +75,9 @@ public class Match {
             opponent.addAura(2.0);
             System.out.println("----------------------------");
             roundWinner = opponentWin;
+            //test
+            System.out.println("Player Aura " + player.getAura());
+            System.out.println("Opponent Aura " + opponent.getAura());
         }
         else {
             System.out.println("La Sombra Oscura: Nobody wins I take half");
@@ -80,6 +85,8 @@ public class Match {
             opponent.addMoney(oppBet/2);
             System.out.println("----------------------------");
             roundWinner = tie;
+            System.out.println("Player Aura " + player.getAura());
+            System.out.println("Opponent Aura " + opponent.getAura());
         }
     }
     public int getWinner(){
