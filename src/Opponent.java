@@ -17,18 +17,28 @@ public class Opponent extends Character {
             TextUtils.fastln(getName() + ": ... I'm putting my all into this one, winner takes all");
             oppBet = getBalance();
         }
+        else if (playerAura > (opponentAura * 4) && (getBalance() * 2) > player.getBalance()){
+            counterDial();
+            oppBet = getBalance();
+        }
         // makes it easier to win, opponent plays riskier -> matches end faster if player has 2 times more aura than opponent
         else if (playerAura > (opponentAura * 2) && getBalance() < player.getBalance()) {
             counterDial();
-            oppBet = getBalance()/2;
+            int ran = (int) (Math.random() * 2) + 1;
+            if (ran == 1) {
+                oppBet = getBalance()/2;
+            }
+            else {
+                oppBet = getBalance();
+            }
         }
         else if (playerAura > opponentAura) {
             counterDial();
-            if (getBalance() < playerBet) {
-                oppBet = getBalance()/3;
+            if (getBalance() < player.getBalance()) {
+                oppBet = getBalance()/2;
             }
             else {
-                oppBet = getBalance()/4;
+                oppBet = getBalance()/3;
             }
         }
         else if ((playerAura * 3) < opponentAura) {
@@ -45,18 +55,24 @@ public class Opponent extends Character {
         //fix this else if statement
         else if (playerAura <= opponentAura) {
             int choice = (int)(Math.random() * 2) + 1;
-            if (choice == 1 && getBalance() > playerBet) {
+            //if player aura is less than the opponent aura -> more likely if a player plays not too risky not too safe...
+            if (choice == 1 && getBalance() > (playerBet * 2)){
+                counterDial();
+                oppBet = playerBet;
+            }
+            //should make it easier for player once i add the higher bet gimmick
+            else if (choice == 1 && getBalance() > playerBet) {
                 System.out.println(getName() + ": I'll play it smart...");
                 oppBet = playerBet/2;
                 }
             else if (choice == 1 && getBalance() <= playerBet) {
-                int random = (int) (Math.random() * 5) + 1;
+                int random = (int) (Math.random() * 3) + 1;
                 System.out.println(getName() + ": I'll leave it up to fate");
-                oppBet = playerBet/random;
+                oppBet = getBalance()/random;
             }
             else if (choice == 2 && getBalance() > playerBet){
                 System.out.println(getName() + ": You're pathetic.... you haven't realized the trick yet.,");
-                oppBet = 1;
+                oppBet = playerBet/2;
             }
             else if (choice == 2 && getBalance() <= playerBet) {
                 System.out.println(getName() + ": lets see if I can survive....");
@@ -72,8 +88,8 @@ public class Opponent extends Character {
     public int placeBet(){
         int oppBet = 0;
         int choice = (int) (Math.random() * 100) + 1;
-        //if you're lucky the opponent will bet it all on a whim 1% chance
-        if (choice == 1){
+        //if you're lucky the opponent will bet it all on a whim 1% chance or if opponent balance is really low -> helps shorten games.
+        if (choice == 1 || getBalance() <= 20){
             thinkDialogue();
             oppBet = getBalance();
         }
