@@ -5,6 +5,6 @@ public class PlayerTest {
 
         //this is used to check if the betAura method works
         System.out.println("Aura is " + one.getAura());
-
+//Aura bug is not from anything in the Player class june 15, 2026
     }
 }

@@ -11,16 +11,18 @@ public class Opponent extends Character {
         double playerAura = player.getAura();
         //gets the aura of the NPC
         double opponentAura = getAura();
-//player pretty much wins if the player aura is 3 times the aura of the opponent aura -> gives a good reason to play risky
+//special CASE** player pretty much wins if the player aura is 3 times the aura of the opponent aura -> gives a good reason to play risky
         if (playerAura > (opponentAura * 3) && getBalance() < player.getBalance()){
             TextUtils.medium(getName() + ": You think I'm scared of you?");
             TextUtils.fastln(getName() + ": ... I'm putting my all into this one, winner takes all");
             oppBet = getBalance();
         }
+        //SPECIAL CASE **
         else if (playerAura > (opponentAura * 4) && (getBalance() * 2) > player.getBalance()){
             counterDial();
             oppBet = getBalance();
         }
+        //SPECIAL CASE ***
         // makes it easier to win, opponent plays riskier -> matches end faster if player has 2 times more aura than opponent
         else if (playerAura > (opponentAura * 2) && getBalance() < player.getBalance()) {
             counterDial();
@@ -32,48 +34,62 @@ public class Opponent extends Character {
                 oppBet = getBalance();
             }
         }
+        //Generic case
         else if (playerAura > opponentAura) {
             counterDial();
-            if (getBalance() < player.getBalance()) {
+            //if opp balance <= player balance then opp bet is half of total balance
+            if (getBalance() <= player.getBalance()) {
+                oppBet = getBalance();
+            }
+
+            else if(getBalance() > player.getBalance()){
                 oppBet = getBalance()/2;
             }
-            else {
+        }
+        //SPEcIAL CASE**
+        //player has 3 times less aura than opponent
+        else if ((playerAura * 3) < opponentAura) {
+            counterDial();
+            int ran = (int) (Math.random() * 100) + 1;
+//opp plays safer if opponent has bad aura
+            if (1 <= ran && ran <= 20) {
+                oppBet = getBalance();
+            }
+            else if (20 < ran && ran <= 50) {
+                oppBet = getBalance()/2;
+            }
+            else if (50 < ran && ran <=100) {
                 oppBet = getBalance()/3;
             }
         }
-        else if ((playerAura * 3) < opponentAura) {
-            counterDial();
-            int ran = (int) (Math.random() * 2) + 1;
-
-            if (ran == 1) {
-                oppBet = playerBet/3;
-            }
-            else if (ran == 2) {
-                oppBet = playerBet/2;
-            }
-        }
-        //fix this else if statement
+       //Generic CASE player aura less than opp aura
         else if (playerAura <= opponentAura) {
             int choice = (int)(Math.random() * 2) + 1;
             //if player aura is less than the opponent aura -> more likely if a player plays not too risky not too safe...
+            //splits into a 50/50 chance of going down each path
+            //opp balance is bigger than 2 times the player bet
             if (choice == 1 && getBalance() > (playerBet * 2)){
                 counterDial();
                 oppBet = playerBet;
             }
             //should make it easier for player once i add the higher bet gimmick
+            //opp balance is bigger than player bet
             else if (choice == 1 && getBalance() > playerBet) {
                 System.out.println(getName() + ": I'll play it smart...");
                 oppBet = playerBet/2;
                 }
+            //opp balance is less than player bet
             else if (choice == 1 && getBalance() <= playerBet) {
                 int random = (int) (Math.random() * 3) + 1;
                 System.out.println(getName() + ": I'll leave it up to fate");
-                oppBet = getBalance()/random;
+                oppBet = getBalance();
             }
+            //balance is greater than player bet
             else if (choice == 2 && getBalance() > playerBet){
                 System.out.println(getName() + ": You're pathetic.... you haven't realized the trick yet.,");
                 oppBet = playerBet/2;
             }
+            //balance is less than player bet
             else if (choice == 2 && getBalance() <= playerBet) {
                 System.out.println(getName() + ": lets see if I can survive....");
                 oppBet = playerBet;
