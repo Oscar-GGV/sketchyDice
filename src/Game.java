@@ -3,25 +3,48 @@ import java.util.Scanner;
 
 public class Game {
     private Player player;
-    private ArrayList<Opponent> opponents;
+    private Opponent boss1;
+    private Opponent boss2;
+    private Opponent boss3;
+    private Opponent finalBoss;
+
+    //for goblin enemies
+    private ArrayList<Opponent> opponents1;
+    //orc enemies
+    private ArrayList<Opponent> opponents2;
+    //wizard enemies
+    private ArrayList<Opponent> opponents3;
     Scanner scnr = new Scanner(System.in);
 
     public Game() {
-      initOpponents();
-      startGame();
+        int ans = 0;
+        initOpponents();
+        if (startGame()==true) {
+            System.out.println("System: restart the program to try again");
+        }
 
     }
-    public void initOpponents(){
-        opponents = new ArrayList<>();
-        opponents.add(new Opponent("Steven the stinky Wizard", 50, 1));
-        opponents.add(new Opponent("Ronnie the Wizard", 100, 2));
-        opponents.add(new Opponent("Johnny the Goblin", 300, 1));
-        opponents.add(new Opponent("Elphaba the Wild Witch", 500, 5));
-        opponents.add(new Opponent("The evil wizard", 1000, 10 ));
-        opponents.add(new Opponent("The corrupt King", 10000, 20));
+
+    public void initOpponents() {
+        opponents1 = new ArrayList<>();
+        opponents1.add(new Opponent("Dumb Goblin", 50, 0));
+        opponents1.add(new Opponent("Ominous Goblin", 75, 5));
+        opponents1.add(new Opponent("Nice Goblin", 100, 15));
+        opponents2 = new ArrayList<>();
+        boss1 = new Opponent("The Goblin King", 200, 25);
+        opponents2.add(new Opponent("Funny Orc", 225, 30));
+        opponents2.add(new Opponent("Real Orc", 250, 35));
+        opponents2.add(new Opponent("Energetic Orc", 275, 40));
+        boss2 = new Opponent("Emerald the Queen of Orcs", 550, 50);
+        opponents3 = new ArrayList<>();
+        opponents3.add(new Opponent("Heinous Wizard", 575, 55));
+        opponents3.add(new Opponent("Intrepid Wizard", 600, 60));
+        opponents3.add(new Opponent("Magnificent Wizard", 625, 65));
+        boss3 = new Opponent("The Prismatic Warden", 1250, 80);
+        finalBoss = new Opponent("???", 5000, 200);
     }
 
-    public Player createPlayer(){
+    public Player createPlayer() {
         TextUtils.slow("???: Hey you.....");
         TextUtils.fastln("... Yeah YOU....");
         TextUtils.mediumln("???: whats yar name?");
@@ -34,15 +57,17 @@ public class Game {
         TextUtils.slowln("???: ... and free me");
         return player;
     }
-    public void exposition(){
+
+    public void exposition() {
         TextUtils.fastln("The year is 7562, on the planet Xenon3");
         TextUtils.fastln("The trees are orange, the sea is red, and the atmosphere is a beautiful orange, with black clouds floating in the sky, everything is perfect....");
         TextUtils.slow("Except you...  ");
         TextUtils.fast("... you're exactly at the wrong place, at the wrong time.... you're looking for scraps in an old ghost town... and then you come across something...");
         TextUtils.slowln("... or someone...");
     }
+
     //dialogue at the beginning of the game
-    public void playerdial1(){
+    public void playerdial1() {
         TextUtils.mediumln(player.getName() + ": well that guy was extremely weird");
         TextUtils.mediumln(player.getName() + ": He gave me like 10 dabloons....");
         TextUtils.slowln(player.getName() + ": find him... and free him... he was right there and then dissapeared");
@@ -63,22 +88,109 @@ public class Game {
     }
 
 
-    public void startGame(){
+    public Boolean startGame() {
         exposition();
         player = createPlayer();
         playerdial1();
         sombradial1();
-        for (int i = 0; i < opponents.size(); i++){
-            Opponent opponent = opponents.get(i);
+        Boolean isDead = false;
+        for (int i = 0; i < opponents1.size(); i++) {
+            if(isDead){
+                break;
+            }
+            Opponent opponent = opponents1.get(i);
             Match round = new Match(player, opponent);
             round.play();
             if (round.getWinner() == 1) {
                 System.out.println("You get to live for another match....");
-            }
-            else if(round.getWinner() == 2) {
+            } else if (round.getWinner() == 2) {
                 System.out.println("You died");
+                isDead = true;
             }
         }
-    }
+        //first boss fight
+        if(!isDead) {
+            Match bfight1 = new Match(player, boss1);
+            bfight1.play();
+            if (bfight1.getWinner() == 1) {
+                System.out.println("You obtained the goblin key");
+            } else {
+                System.out.println("You died");
+                isDead = true;
+            }
+        }
 
+        if(!isDead) {
+            for (int i = 0; i < opponents2.size(); i++) {
+                Opponent opponent = opponents2.get(i);
+                Match round = new Match(player, opponent);
+                round.play();
+                if (round.getWinner() == 1) {
+                    System.out.println("You get to live for another match....");
+                } else if (round.getWinner() == 2) {
+                    System.out.println("You died");
+                    isDead = true;
+                    break;
+                }
+            }
+        }
+
+        //second boss fight
+        if (!isDead) {
+            Match bfight2 = new Match(player, boss2);
+            bfight2.play();
+            if (bfight2.getWinner() == 1) {
+                System.out.println("You obtained the Orc key");
+            } else  {
+                System.out.println("You died");
+                isDead = true;
+
+            }
+        }
+
+        if(!isDead) {
+            for (int i = 0; i < opponents3.size(); i++) {
+                Opponent opponent = opponents3.get(i);
+                Match round = new Match(player, opponent);
+                round.play();
+                if (round.getWinner() == 1) {
+                    System.out.println("You get to live for another match....");
+                } else if (round.getWinner() == 2) {
+                    System.out.println("You died");
+                    isDead = true;
+                    break;
+                }
+            }
+        }
+
+        //third boss fight
+        if(!isDead) {
+            Match bfight3 = new Match(player, boss3);
+            bfight3.play();
+            if (bfight3.getWinner() == 1) {
+                System.out.println("You obtained the wizard key");
+            } else {
+                System.out.println("You died");
+                isDead = true;
+            }
+        }
+
+        //final boss
+        if(!isDead) {
+            if (player.getAura() > 100) {
+                Match bfight4 = new Match(player, finalBoss);
+                bfight4.play();
+                if (bfight4.getWinner() == 1) {
+                    System.out.println("You obtained the wizard key");
+                } else {
+                    System.out.println("You died");
+                    isDead = true;
+                }
+            } else {
+                System.out.println("You Win the Game!!!!");
+            }
+        }
+
+return isDead;
+    }
 }

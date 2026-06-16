@@ -34,59 +34,53 @@ public class Match {
         int playerBet = 0;
        //if the player starts the opp counter bets
         if (playerStarts) {
-            System.out.println("La Sombra Oscura: " + player.getName() + " goes first...");
+            TextUtils.fastln("La Sombra Oscura: " + player.getName() + " goes first...");
             playerBet = player.chooseBet();
             player.loseMoney(playerBet);
-            System.out.println("La Sombra Oscura: Now " + opponent.getName() + " goes....");
+            TextUtils.fastln("La Sombra Oscura: Now " + opponent.getName() + " goes....");
             oppBet = opponent.counterBet(player, playerBet);
             opponent.loseMoney(oppBet);
         }
         //otherwise opp bets first and player counter bets
         else {
-            System.out.println("La Sombra Oscura: " + opponent.getName() + " goes first...");
+            TextUtils.fastln("La Sombra Oscura: " + opponent.getName() + " goes first...");
             oppBet = opponent.placeBet();
             opponent.loseMoney(oppBet);
-            System.out.println("La Sombra Oscura: Now " + player.getName() + " goes....");
+            TextUtils.fastln("La Sombra Oscura: Now " + player.getName() + " goes....");
             playerBet = player.chooseBet();
             player.loseMoney(playerBet);
         }
-        int totalBet = (oppBet + playerBet)/10 + (oppBet + playerBet);
-        System.out.println("La Sombra Oscura: First we will start with the rolls for " + player.getName());
+        int totalBet = (oppBet + playerBet);
+        TextUtils.fastln("La Sombra Oscura: First we will start with the rolls for " + player.getName());
         DiceRoll diceroll = new DiceRoll();
         int playroll = diceroll.roll();
-        System.out.println("La Sombra Oscura: " + player.getName() + " rolled " + playroll);
-        System.out.println("La Sombra Oscura: Now lets do the rolls for " + opponent.getName());
+        TextUtils.fastln("La Sombra Oscura: " + player.getName() + " rolled " + playroll);
+        TextUtils.fastln("La Sombra Oscura: Now lets do the rolls for " + opponent.getName());
         int opproll = diceroll.roll();
-        System.out.println("La Sombra Oscura: " + opponent.getName() + " rolled " + opproll);
+        TextUtils.fastln("La Sombra Oscura: " + opponent.getName() + " rolled " + opproll);
         if (playroll > opproll) {
-            System.out.println("La Sombra Oscura: " + player.getName() + " wins");
+            TextUtils.fastln("La Sombra Oscura: " + player.getName() + " wins");
             player.addMoney(totalBet);
             System.out.println("System: " + totalBet + " goes to " + player.getName());
-            player.addAura(2.0);
+            player.addAura(1.0);
             System.out.println("----------------------------");
             roundWinner = playerWin;
-            System.out.println("Player Aura " + player.getAura());
-            System.out.println("Opponent Aura " + opponent.getAura());
         }
         else if (playroll < opproll) {
-            System.out.println("La Sombra Oscura: " + opponent.getName() + " wins");
+            TextUtils.fastln("La Sombra Oscura: " + opponent.getName() + " wins");
             opponent.addMoney(totalBet);
-            System.out.println("System: " + totalBet + " goes to "  + opponent.getName());
-            opponent.addAura(2.0);
+            System.out.println("System: " + totalBet + " goes to " + opponent.getName());
+            opponent.addAura(.2);
             System.out.println("----------------------------");
             roundWinner = opponentWin;
             //test
-            System.out.println("Player Aura " + player.getAura());
-            System.out.println("Opponent Aura " + opponent.getAura());
         }
         else {
-            System.out.println("La Sombra Oscura: Nobody wins I take half");
+            TextUtils.fastln("La Sombra Oscura: Nobody wins I take half");
             player.addMoney(playerBet/2);
             opponent.addMoney(oppBet/2);
             System.out.println("----------------------------");
             roundWinner = tie;
-            System.out.println("Player Aura " + player.getAura());
-            System.out.println("Opponent Aura " + opponent.getAura());
         }
     }
     public int getWinner(){
