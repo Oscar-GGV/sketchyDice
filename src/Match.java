@@ -51,13 +51,26 @@ public class Match {
             player.loseMoney(playerBet);
         }
         int totalBet = (oppBet + playerBet);
-        TextUtils.fastln("La Sombra Oscura: First we will start with the rolls for " + player.getName());
-        DiceRoll diceroll = new DiceRoll();
-        int playroll = diceroll.roll();
-        TextUtils.fastln("La Sombra Oscura: " + player.getName() + " rolled " + playroll);
-        TextUtils.fastln("La Sombra Oscura: Now lets do the rolls for " + opponent.getName());
-        int opproll = diceroll.roll();
-        TextUtils.fastln("La Sombra Oscura: " + opponent.getName() + " rolled " + opproll);
+        int playroll = 0;
+        int opproll = 0;
+        if (playerStarts) {
+            TextUtils.fastln("La Sombra Oscura: First we will start with the rolls for " + player.getName());
+            DiceRoll diceroll = new DiceRoll();
+            playroll = diceroll.roll();
+            TextUtils.fastln("La Sombra Oscura: " + player.getName() + " rolled " + playroll);
+            TextUtils.fastln("La Sombra Oscura: Now lets do the rolls for " + opponent.getName());
+            opproll = diceroll.roll();
+            TextUtils.fastln("La Sombra Oscura: " + opponent.getName() + " rolled " + opproll);
+        }
+        else {
+            TextUtils.fastln("La Sombra Oscura: First we will start with the rolls for " + opponent.getName());
+            DiceRoll diceroll = new DiceRoll();
+            opproll = diceroll.roll();
+            TextUtils.fastln("La Sombra Oscura: " + opponent.getName() + " rolled " + opproll);
+            TextUtils.fastln("La Sombra Oscura: Now lets do the rolls for " + player.getName());
+            playroll = diceroll.roll();
+            TextUtils.fastln("La Sombra Oscura: " + player.getName() + " rolled " + playroll);
+        }
         if (playroll > opproll) {
             TextUtils.fastln("La Sombra Oscura: " + player.getName() + " wins");
             player.addMoney(totalBet);

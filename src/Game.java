@@ -3,10 +3,10 @@ import java.util.Scanner;
 
 public class Game {
     private Player player;
-    private Opponent boss1;
-    private Opponent boss2;
-    private Opponent boss3;
-    private Opponent finalBoss;
+    private Goblin boss1;
+    private Orc boss2;
+    private Wizard boss3;
+    private Unknown finalBoss;
 
     //for goblin enemies
     private ArrayList<Opponent> opponents1;
@@ -31,17 +31,17 @@ public class Game {
         opponents1.add(new Opponent("Ominous Goblin", 75, 5));
         opponents1.add(new Opponent("Nice Goblin", 100, 15));
         opponents2 = new ArrayList<>();
-        boss1 = new Opponent("The Goblin King", 200, 25);
+        boss1 = new Goblin("The Goblin King", 200, 25);
         opponents2.add(new Opponent("Funny Orc", 225, 30));
         opponents2.add(new Opponent("Real Orc", 250, 35));
         opponents2.add(new Opponent("Energetic Orc", 275, 40));
-        boss2 = new Opponent("Emerald the Queen of Orcs", 550, 50);
+        boss2 = new Orc("Emerald Queen of Orcs", 550, 50);
         opponents3 = new ArrayList<>();
         opponents3.add(new Opponent("Heinous Wizard", 575, 55));
         opponents3.add(new Opponent("Intrepid Wizard", 600, 60));
         opponents3.add(new Opponent("Magnificent Wizard", 625, 65));
-        boss3 = new Opponent("The Prismatic Warden", 1250, 80);
-        finalBoss = new Opponent("???", 5000, 200);
+        boss3 = new Wizard("Mars, The Wizard King", 1250, 80);
+        finalBoss = new Unknown("???", 5000, 200);
     }
 
     public Player createPlayer() {
