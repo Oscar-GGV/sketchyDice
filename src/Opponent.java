@@ -131,6 +131,7 @@ public class Opponent extends Character {
         }
         //bet is 16% of balance... 10% chance
         else if (choice > 90 && choice <= 100) {
+            thinkDialogue();
             oppBet = getBalance()/6;
         }
         return oppBet;
@@ -155,7 +156,7 @@ public class Opponent extends Character {
            TextUtils.mediumln(getName() + ": I bet you don't even have half the money I have");
        }
        else if (choice == 6){
-           TextUtils.mediumln(getName() + ": I wonder how many rounds you can last till you gp broke");
+           TextUtils.mediumln(getName() + ": I wonder how many rounds you can last till you hit 0");
        }
        else if (choice == 7) {
            TextUtils.mediumln(getName() + ": doesn't it make you nervous? if you hit 0 you DIE");
