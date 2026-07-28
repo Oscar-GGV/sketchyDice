@@ -12,12 +12,15 @@ FEATURES:
   
 
 - UML CLASS DIAGRAM:
-- ```mermaid
-classDiagram
+## UML Class Diagram
 
-%% ===========================
-%% Base Character Class
-%% ===========================
+```mermaid
+classDiagram
+direction TB
+
+%%==================================================
+%% Character (Base Class)
+%%==================================================
 
 class Character{
     -String name
@@ -37,25 +40,25 @@ class Character{
     +void loseMoney(int amount)
 }
 
-%% ===========================
+%%==================================================
 %% Player
-%% ===========================
+%%==================================================
 
 class Player{
-    -Scanner scnr
+    -Scanner scanner
 
     +Player(String name, int balance, double aura)
 
     +int chooseBet()
-    +void playDial()
-    +void betAura(int bet)
+    +void playDialogue()
+    +void betAura(int amount)
 }
 
 Character <|-- Player
 
-%% ===========================
+%%==================================================
 %% Opponent
-%% ===========================
+%%==================================================
 
 class Opponent{
 
@@ -65,37 +68,37 @@ class Opponent{
     +int counterBet(Player player, int playerBet)
 
     +void thinkDialogue()
-    +void counterDial()
+    +void counterDialogue()
 }
 
 Character <|-- Opponent
 
-%% ===========================
+%%==================================================
 %% Enemy Types
-%% ===========================
+%%==================================================
 
 class Goblin{
     +Goblin(...)
     +void thinkDialogue()
-    +void counterDial()
+    +void counterDialogue()
 }
 
 class Orc{
     +Orc(...)
     +void thinkDialogue()
-    +void counterDial()
+    +void counterDialogue()
 }
 
 class Wizard{
     +Wizard(...)
     +void thinkDialogue()
-    +void counterDial()
+    +void counterDialogue()
 }
 
 class Unknown{
     +Unknown(...)
     +void thinkDialogue()
-    +void counterDial()
+    +void counterDialogue()
 }
 
 Opponent <|-- Goblin
@@ -103,9 +106,9 @@ Opponent <|-- Orc
 Opponent <|-- Wizard
 Opponent <|-- Unknown
 
-%% ===========================
+%%==================================================
 %% Dice
-%% ===========================
+%%==================================================
 
 class DiceRoll{
     -int die1
@@ -115,42 +118,35 @@ class DiceRoll{
     +int roll()
 }
 
-%% ===========================
+%%==================================================
 %% Match
-%% ===========================
+%%==================================================
 
 class Match{
-
     -Player player
     -Opponent opponent
-
     -boolean playerStarts
 
-    -int roundWinner
-    -int matchWinner
-
-    +playerWin : int
-    +opponentWin : int
-    +tie : int
+    +int playerWins
+    +int opponentWins
+    +int ties
 
     +Match(Player player, Opponent opponent)
 
     +void play()
     +void playRound()
-
     +int getWinner()
 }
 
-Match --> Player
-Match --> Opponent
-Match --> DiceRoll
+Match *-- Player
+Match *-- Opponent
+Match *-- DiceRoll
 
-%% ===========================
+%%==================================================
 %% Game
-%% ===========================
+%%==================================================
 
 class Game{
-
     -Player player
 
     -Goblin boss1
@@ -162,38 +158,37 @@ class Game{
     -ArrayList~Opponent~ opponents2
     -ArrayList~Opponent~ opponents3
 
-    -Scanner scnr
+    -Scanner scanner
 
     +Game()
 
-    +void initOpponents()
+    +void initializeOpponents()
 
     +Player createPlayer()
 
     +void exposition()
 
-    +void playerdial1()
+    +void playerDialogue()
 
-    +void sombradial1()
+    +void enemyDialogue()
 
-    +Boolean startGame()
+    +boolean startGame()
 }
 
-Game --> Player
-Game --> Match
-Game --> Goblin
-Game --> Orc
-Game --> Wizard
-Game --> Unknown
+Game *-- Player
+Game *-- Match
+Game *-- Goblin
+Game *-- Orc
+Game *-- Wizard
+Game *-- Unknown
 
 Game o-- "3" ArrayList~Opponent~
 
-%% ===========================
+%%==================================================
 %% Utility
-%% ===========================
+%%==================================================
 
 class TextUtils{
-
     +fast(String)
     +fastln(String)
 
@@ -209,9 +204,9 @@ Player ..> TextUtils
 Opponent ..> TextUtils
 Match ..> TextUtils
 
-%% ===========================
+%%==================================================
 %% Main
-%% ===========================
+%%==================================================
 
 class Main{
     +main(String[] args)
@@ -219,26 +214,25 @@ class Main{
 
 Main --> Game
 
-%% ===========================
-%% Tests
-%% ===========================
+%%==================================================
+%% Unit Tests
+%%==================================================
 
+class GameTest
+class MatchTest
 class PlayerTest
 class OpponentTest
 class GoblinTest
 class OrcTest
 class DiceRollTest
-class MatchTest
-class GameTest
 
+GameTest ..> Game
+MatchTest ..> Match
 PlayerTest ..> Player
 OpponentTest ..> Opponent
 GoblinTest ..> Goblin
 OrcTest ..> Orc
 DiceRollTest ..> DiceRoll
-MatchTest ..> Match
-GameTest ..> Game
 ```
 Dependencies:
-JAVA
-
+Java
